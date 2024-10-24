@@ -23,6 +23,7 @@ function PostForm({post}) {
             const file=data.image[0] ? await appwriteService.uploadFile(data.image[0]) :null;
             console.log("here in post submit");
             if(file){
+                console.log("here in ");
                 appwriteService.deleteFile(post.featuredImage)
 
             }
@@ -30,6 +31,7 @@ function PostForm({post}) {
                 ...data,
                 featuredImage: file ? file.$id :undefined
             })    
+            console.log(dbPost);
             if(dbPost){
                 navigate(`/post/${dbPost.$id}`)
             }
@@ -106,10 +108,11 @@ function PostForm({post}) {
                 accept="image/png,image/jpg,image/jpeg, image/gif"
                 {...register("image",{required:!post})} 
             />
+            {post && console.log(post)}
             {post && (
                 <div className='w-full mb-4'>
                     <img 
-                        src={appwriteService.getFilePreview(post.featuredImage)}
+                        src={appwriteService.getFilePreview(post.featured_image)}
                         alt={post.title}
                         className='rounded-lg'
                     />
